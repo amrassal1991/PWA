@@ -2,7 +2,7 @@
   "name": "Notebook AI Studio",
   "short_name": "AI Studio",
   "description": "A modern AI-powered notebook studio for learning and collaboration",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1a237e",
@@ -21,4 +21,3 @@
     }
   ]
 }
-
