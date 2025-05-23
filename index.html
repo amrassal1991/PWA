@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sound & TTS Player with Notebook Link</title>
 <link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#1a237e" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="apple-touch-icon" href="https://colab.research.google.com/img/colab_favicon_256px.png" />
 <style>
   body {
     font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -189,5 +193,39 @@
     <button id="dismissPush">Dismiss</button>
   </div>
 <script src="script.js"></script>
+<script>
+  // Register Service Worker for PWA functionality
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('Service Worker registered with scope:', registration.scope);
+          
+          // Check for updates
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            console.log('Service Worker update found!');
+            
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New version available
+                if (confirm('A new version is available! Reload to update?')) {
+                  window.location.reload();
+                }
+              }
+            });
+          });
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed:', error);
+        });
+        
+      // Check for updates on page load
+      navigator.serviceWorker.ready.then(registration => {
+        registration.update();
+      });
+    });
+  }
+</script>
 </body>
 </html>
