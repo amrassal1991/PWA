@@ -164,21 +164,54 @@ document.addEventListener('DOMContentLoaded', () => {
     let deferredPrompt;
     const installBtn = document.getElementById('installBtn');
     if (installBtn) {
+      // Hide the button initially
+      installBtn.style.display = 'none';
+      
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
+        // Show the install button
         installBtn.style.display = 'flex';
+        
+        // Log that the install prompt was captured
+        console.log('Install prompt captured and ready');
       });
+      
       installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
+          // Show the install prompt
           deferredPrompt.prompt();
+          
+          // Wait for the user to respond to the prompt
           const { outcome } = await deferredPrompt.userChoice;
+          console.log(`User response to the install prompt: ${outcome}`);
+          
           if (outcome === 'accepted') {
+            console.log('User accepted the install prompt');
             installBtn.style.display = 'none';
+          } else {
+            console.log('User dismissed the install prompt');
           }
+          
+          // Clear the saved prompt
           deferredPrompt = null;
+        } else {
+          // If the app is already installed or running in standalone mode
+          alert('This app is already installed or cannot be installed on this device/browser.');
         }
       });
+      
+      // Check if the app is already installed
+      window.addEventListener('appinstalled', (e) => {
+        console.log('App was successfully installed');
+        installBtn.style.display = 'none';
+      });
+      
+      // Check if already in standalone mode (PWA)
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        console.log('App is running in standalone mode (installed)');
+        installBtn.style.display = 'none';
+      }
     }
 
     // Web Share API (Share Button)
