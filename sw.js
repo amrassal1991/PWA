@@ -4,7 +4,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/script.js',
-  '/style.ccs',
+  '/style.css',
   '/manifest.json'
 ];
 
@@ -97,4 +97,3 @@ self.addEventListener('notificationclick', event => {
     clients.openWindow('/')
   );
 });
-
