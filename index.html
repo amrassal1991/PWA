@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sound & TTS Player with Notebook Link</title>
 <link rel="manifest" href="manifest.json" />
+<link rel="stylesheet" href="style.css" />
 <meta name="theme-color" content="#1a237e" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -197,7 +198,7 @@
   // Register Service Worker for PWA functionality
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('sw.js')
         .then(registration => {
           console.log('Service Worker registered with scope:', registration.scope);
           
